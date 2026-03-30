@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="ko" className={notoSansKR.variable}>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <Toaster richColors position="top-center" />
       </body>
     </html>
