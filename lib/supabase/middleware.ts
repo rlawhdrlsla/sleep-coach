@@ -28,16 +28,18 @@ export async function updateSession(request: NextRequest) {
   if (!user && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
+    url.searchParams.set("next", pathname);
     return NextResponse.redirect(url);
   }
 
   if (!user && isAdmin) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
+    url.searchParams.set("next", pathname);
     return NextResponse.redirect(url);
   }
 
-  if (user && isAdmin && user.email !== process.env.ADMIN_EMAIL) {
+  if (user && isAdmin && user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);

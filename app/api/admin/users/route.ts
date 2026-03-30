@@ -13,7 +13,7 @@ function getAdminClient() {
 async function checkAdmin() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user || user.email !== process.env.ADMIN_EMAIL) return false;
+  if (!user || user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) return false;
   return true;
 }
 

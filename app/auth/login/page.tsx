@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,6 +20,7 @@ type Form = z.infer<typeof schema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useLang();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Form>({ resolver: zodResolver(schema) });
@@ -29,7 +30,8 @@ export default function LoginPage() {
     const { error } = await createClient().auth.signInWithPassword({ email: data.email, password: data.password });
     setLoading(false);
     if (error) { toast.error(t.auth.loginError); return; }
-    router.push("/");
+    const next = searchParams.get("next") ?? "/";
+    router.push(next);
     router.refresh();
   };
 

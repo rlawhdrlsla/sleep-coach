@@ -32,11 +32,11 @@
 }
 
 :root {
-  --background: #13131b;
+  --background: #0c0c0e;
   --foreground: #e4e1ed;
-  --card: #1f1f27;
+  --card: #151519;
   --card-foreground: #e4e1ed;
-  --popover: #1f1f27;
+  --popover: #151519;
   --popover-foreground: #e4e1ed;
   --primary: #bac3ff;
   --primary-foreground: #08218a;
