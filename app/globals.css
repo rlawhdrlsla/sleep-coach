@@ -8,7 +8,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-heading: var(--font-heading);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -32,25 +32,26 @@
 }
 
 :root {
-  --background: #0c0c0e;
-  --foreground: #f0f0f2;
-  --card: #141416;
-  --card-foreground: #f0f0f2;
-  --popover: #141416;
-  --popover-foreground: #f0f0f2;
-  --primary: #7c6ef5;
-  --primary-foreground: #ffffff;
-  --secondary: #1c1c1f;
-  --secondary-foreground: #f0f0f2;
-  --muted: #1c1c1f;
-  --muted-foreground: #6b6b72;
-  --accent: #1c1c1f;
-  --accent-foreground: #f0f0f2;
-  --destructive: #e05252;
-  --border: #222226;
-  --input: #1c1c1f;
-  --ring: #7c6ef5;
+  --background: #13131b;
+  --foreground: #e4e1ed;
+  --card: #1f1f27;
+  --card-foreground: #e4e1ed;
+  --popover: #1f1f27;
+  --popover-foreground: #e4e1ed;
+  --primary: #bac3ff;
+  --primary-foreground: #08218a;
+  --secondary: #292932;
+  --secondary-foreground: #e4e1ed;
+  --muted: #1f1f27;
+  --muted-foreground: #908f9d;
+  --accent: #34343d;
+  --accent-foreground: #e4e1ed;
+  --destructive: #ffb4ab;
+  --border: rgba(70, 70, 82, 0.3);
+  --input: #1f1f27;
+  --ring: #bac3ff;
   --radius: 0.75rem;
+  --tertiary: #e9c400;
 }
 
 @layer base {
@@ -63,4 +64,29 @@
   html {
     @apply font-sans;
   }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(27, 27, 35, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(70, 70, 82, 0.2);
+  }
+  .glass-nav {
+    background: rgba(27, 27, 35, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(70, 70, 82, 0.15);
+  }
+  .glass-header {
+    background: rgba(19, 19, 27, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .active-glow {
+    box-shadow: 0 0 24px rgba(186, 195, 255, 0.15);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }

@@ -14,8 +14,10 @@ export default function Header({ right }: { right?: React.ReactNode }) {
   const { lang, setLang, t } = useLang();
 
   return (
-    <header className="flex items-center justify-between px-5 pt-8 pb-4">
-      <span className="text-lg font-black tracking-tight">{t.appName}</span>
+    <header className="fixed top-0 w-full z-50 glass-header flex items-center justify-between px-5 py-4 max-w-lg mx-auto left-0 right-0">
+      <h1 className="font-[family-name:var(--font-heading)] font-extrabold text-lg text-primary tracking-tight">
+        {t.appName}
+      </h1>
       <div className="flex items-center gap-3">
         {right}
         <select
@@ -24,7 +26,7 @@ export default function Header({ right }: { right?: React.ReactNode }) {
           className="bg-transparent text-xs text-muted-foreground focus:outline-none cursor-pointer hover:text-foreground transition-colors"
         >
           {LANGS.map((l) => (
-            <option key={l.code} value={l.code} className="bg-background">
+            <option key={l.code} value={l.code} className="bg-[#1f1f27]">
               {l.label}
             </option>
           ))}
