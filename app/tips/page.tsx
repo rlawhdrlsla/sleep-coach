@@ -4,7 +4,7 @@ import TipsContent from "./TipsContent";
 
 export default function TipsPage() {
   return (
-    <div className="min-h-screen flex flex-col max-w-lg mx-auto">
+    <div className="min-h-screen bg-background">
       <Header />
       <TipsContent />
       <BottomNav />

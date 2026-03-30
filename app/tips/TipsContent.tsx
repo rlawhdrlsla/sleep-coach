@@ -51,27 +51,39 @@ const TIPS = {
 
 export default function TipsContent() {
   const { t, lang } = useLang();
-  const tips = TIPS[lang] ?? TIPS.ko;
+  const tips = TIPS[lang as keyof typeof TIPS] ?? TIPS.ko;
 
   return (
-    <main className="flex-1 px-5 pb-6 space-y-6">
-      <div>
-        <h1 className="text-4xl font-black leading-tight tracking-tight">{t.tips.title}</h1>
-        <p className="text-muted-foreground mt-2 text-sm">{t.tips.subtitle}</p>
-      </div>
-      <div>
+    <main className="pt-24 pb-36 px-5 max-w-lg mx-auto space-y-6">
+      <section>
+        <span className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary mb-2 font-[family-name:var(--font-body)]">
+          Sleep Science
+        </span>
+        <h2 className="font-[family-name:var(--font-heading)] font-bold text-3xl text-foreground leading-tight mb-2">
+          {t.tips.title}
+        </h2>
+        <p className="text-muted-foreground text-sm leading-relaxed max-w-[85%]">
+          {t.tips.subtitle}
+        </p>
+      </section>
+
+      <div className="space-y-3">
         {tips.map((tip, i) => (
-          <div key={tip.title} className="py-5 border-b border-border last:border-0">
+          <div key={tip.title} className="glass-card rounded-2xl p-4">
             <div className="flex items-start gap-4">
-              <span className="text-2xl mt-0.5">{tip.emoji}</span>
-              <div className="flex-1 space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-sm">{tip.title}</span>
-                  <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">{tip.tag}</span>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{tip.desc}</p>
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 text-xl">
+                {tip.emoji}
               </div>
-              <span className="text-muted-foreground/30 font-black text-sm tabular-nums mt-0.5">
+              <div className="flex-1 space-y-1.5 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-[family-name:var(--font-heading)] font-bold text-sm">{tip.title}</span>
+                  <span className="text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide shrink-0">
+                    {tip.tag}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{tip.desc}</p>
+              </div>
+              <span className="text-muted-foreground/20 font-[family-name:var(--font-heading)] font-black text-xs tabular-nums mt-0.5 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
             </div>
