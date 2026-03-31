@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronRight, Moon } from "lucide-react";
+import { Moon } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
@@ -233,39 +233,17 @@ export default function HomePage() {
             );
           })()}
 
-          <div className="grid grid-cols-2 gap-3">
-            {others.slice(0, 2).map((r) => {
-              const [main, ampm] = formatTime(r.time).split("|");
-              return (
-                <div key={r.cycles} className="bg-[#131319] p-5 rounded-[24px] hover:bg-[#191920] transition-colors duration-200">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
-                    {r.cycles}{lang === "ko" ? "사이클" : " cycles"}
-                  </span>
-                  <h4 className="text-xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
-                    {main}<span className="text-sm text-muted-foreground ml-1">{ampm}</span>
-                  </h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{r.label}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          {others.slice(2).map((r) => {
+          {others.map((r) => {
             const [main, ampm] = formatTime(r.time).split("|");
             return (
-              <div key={r.cycles} className="bg-[#131319] p-5 rounded-[24px] hover:bg-[#191920] transition-colors duration-200 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
-                    {r.cycles}{lang === "ko" ? "사이클" : " cycles"}
-                  </span>
-                  <h4 className="text-xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
-                    {main}<span className="text-sm text-muted-foreground ml-1">{ampm}</span>
-                  </h4>
-                  <p className="text-xs text-muted-foreground">{r.label}</p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-[#1f1f28] flex items-center justify-center shrink-0">
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                </div>
+              <div key={r.cycles} className="bg-[#131319] p-5 rounded-[24px] hover:bg-[#191920] transition-colors duration-200">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
+                  {r.cycles}{lang === "ko" ? "사이클" : " cycles"}
+                </span>
+                <h4 className="text-xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+                  {main}<span className="text-sm text-muted-foreground ml-1">{ampm}</span>
+                </h4>
+                <p className="text-xs text-muted-foreground">{r.label}</p>
               </div>
             );
           })}
@@ -273,13 +251,27 @@ export default function HomePage() {
 
         {/* Sleep Science */}
         <section className="mt-16 rounded-[2rem] overflow-hidden relative h-44 group">
-          {/* Moon image */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/800px-FullMoon2010.jpg"
-            alt="moon"
-            className="absolute inset-0 w-full h-full object-cover grayscale opacity-25 group-hover:scale-105 transition-transform duration-1000"
-          />
+          {/* CSS moon + starfield */}
+          <div className="absolute inset-0 bg-[#0a0a10]">
+            {/* Stars */}
+            {[...Array(40)].map((_, i) => (
+              <div key={i} className="absolute rounded-full bg-white"
+                style={{
+                  width: (i % 3 === 0 ? 2 : 1) + "px",
+                  height: (i % 3 === 0 ? 2 : 1) + "px",
+                  top: (i * 37 % 100) + "%",
+                  left: (i * 53 % 100) + "%",
+                  opacity: 0.15 + (i % 5) * 0.07,
+                }}
+              />
+            ))}
+            {/* Moon circle */}
+            <div className="absolute top-4 right-10 w-20 h-20 rounded-full opacity-20"
+              style={{ background: "radial-gradient(circle at 35% 35%, #fff8dc, #c8a800)" }} />
+            {/* Moon shadow (crescent effect) */}
+            <div className="absolute top-4 right-10 w-20 h-20 rounded-full opacity-20"
+              style={{ background: "radial-gradient(circle at 65% 35%, #0a0a10 40%, transparent 70%)" }} />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6">
             <h5 className="text-lg font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
