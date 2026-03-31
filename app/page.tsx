@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronRight, RotateCcw, Lightbulb } from "lucide-react";
+import { ChevronRight, Moon } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
@@ -25,74 +25,48 @@ function formatTime(date: Date): string {
 const hours = Array.from({ length: 24 }, (_, i) => i);
 const minuteOptions = Array.from({ length: 12 }, (_, i) => i * 5);
 
-function TimeSelect({ hour, onHourChange, minute, onMinuteChange }: {
+function TimePicker({ hour, onHourChange, minute, onMinuteChange }: {
   hour: number; onHourChange: (v: number) => void;
   minute: number; onMinuteChange: (v: number) => void;
 }) {
+  const ampm = hour < 12 ? "AM" : "PM";
+  const h12 = hour % 12 === 0 ? 12 : hour % 12;
   return (
-    <div className="flex items-center justify-center gap-3 my-6">
-      <select value={hour} onChange={(e) => onHourChange(+e.target.value)}
-        className="glass-card rounded-xl px-4 py-3 text-3xl font-[family-name:var(--font-heading)] font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none text-center cursor-pointer"
-        style={{ minWidth: 90 }}>
-        {hours.map((h) => <option key={h} value={h} className="bg-[#131316]">{String(h).padStart(2, "0")}</option>)}
-      </select>
-      <span className="text-3xl font-bold text-muted-foreground">:</span>
-      <select value={minute} onChange={(e) => onMinuteChange(+e.target.value)}
-        className="glass-card rounded-xl px-4 py-3 text-3xl font-[family-name:var(--font-heading)] font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none text-center cursor-pointer"
-        style={{ minWidth: 90 }}>
-        {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#131316]">{String(m).padStart(2, "0")}</option>)}
-      </select>
-    </div>
-  );
-}
-
-function RecommendedCard({ time, label, type }: { time: Date; label: string; type: "wake" | "sleep" }) {
-  const [main, ampm] = formatTime(time).split("|");
-  return (
-    <div className="glass-card rounded-2xl p-5 relative overflow-hidden active-glow border-primary/20 bg-gradient-to-br from-[#131316] to-[#0c0c0e] mb-4">
-      <div className="absolute top-0 right-0 bg-[var(--tertiary)] text-[#221b00] text-[10px] font-bold px-3 py-1 rounded-bl-2xl uppercase tracking-tight font-[family-name:var(--font-heading)]">
-        {type === "wake" ? "권장" : "권장"}
-      </div>
-      <div className="flex justify-between items-end">
-        <div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-primary font-[family-name:var(--font-heading)] font-bold text-4xl tabular-nums">{main}</span>
-            <span className="text-primary/60 font-[family-name:var(--font-heading)] font-bold text-xl">{ampm}</span>
-          </div>
-          <div className="flex items-center gap-2 mt-3">
-            <RotateCcw className="h-3 w-3 text-muted-foreground" />
-            <p className="text-muted-foreground text-xs font-medium">{label}</p>
-          </div>
+    <div className="text-center">
+      <div className="inline-flex items-end justify-center gap-1 mb-3">
+        <div className="relative inline-block">
+          <span className="text-6xl font-extrabold tracking-tighter text-foreground text-glow pointer-events-none select-none">
+            {String(h12).padStart(2, "0")}
+          </span>
+          <select
+            value={hour}
+            onChange={(e) => onHourChange(+e.target.value)}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+          >
+            {hours.map((h) => <option key={h} value={h} className="bg-[#131319]">{String(h).padStart(2, "0")}</option>)}
+          </select>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function StandardCard({ time, label }: { time: Date; label: string }) {
-  const [main, ampm] = formatTime(time).split("|");
-  return (
-    <div className="glass-card rounded-2xl p-5 hover:bg-[#1a1a1f]/60 transition-colors cursor-default">
-      <div className="flex justify-between items-center">
-        <div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-foreground font-[family-name:var(--font-heading)] font-bold text-2xl tabular-nums">{main}</span>
-            <span className="text-muted-foreground font-[family-name:var(--font-heading)] font-bold text-sm">{ampm}</span>
-          </div>
-          <p className="text-muted-foreground text-xs mt-1">{label}</p>
+        <span className="text-6xl font-extrabold text-foreground text-glow mb-0.5">:</span>
+        <div className="relative inline-block">
+          <span className="text-6xl font-extrabold tracking-tighter text-foreground text-glow pointer-events-none select-none">
+            {String(minute).padStart(2, "0")}
+          </span>
+          <select
+            value={minute}
+            onChange={(e) => onMinuteChange(+e.target.value)}
+            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+          >
+            {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#131319]">{String(m).padStart(2, "0")}</option>)}
+          </select>
         </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground/40" />
+        <span className="text-xl font-bold text-muted-foreground pb-2 ml-1">{ampm}</span>
+      </div>
+      <div className="h-0.5 w-20 bg-primary/20 mx-auto rounded-full">
+        <div className="h-full bg-primary rounded-full transition-all duration-300" style={{ width: `${(minute / 55) * 100}%` }} />
       </div>
     </div>
   );
 }
-
-const MORNING_TIPS = {
-  ko: "기상 후 30분 이내 햇빛을 쬐면 생체 시계가 리셋되어 오늘 밤 더 잘 잘 수 있어요.",
-  en: "Exposure to natural sunlight within 30 minutes of waking helps reset your circadian clock for better sleep tonight.",
-  zh: "起床后30分钟内晒太阳，有助于重置生物钟，让今晚睡得更好。",
-  ja: "起床後30分以内に日光を浴びると体内時計がリセットされ、今夜の睡眠の質が上がります。",
-};
 
 export default function HomePage() {
   const { t, lang } = useLang();
@@ -101,7 +75,7 @@ export default function HomePage() {
   const [sleepHour, setSleepHour] = useState(23);
   const [sleepMinute, setSleepMinute] = useState(0);
   const [wakeHour, setWakeHour] = useState(7);
-  const [wakeMinute, setWakeMinute] = useState(0);
+  const [wakeMinute, setWakeMinute] = useState(30);
 
   useEffect(() => {
     setNow(new Date());
@@ -112,7 +86,7 @@ export default function HomePage() {
   const makeResults = (baseFn: (c: number) => Date) =>
     CYCLES.map((c) => {
       const info = t.cycles[c as keyof typeof t.cycles];
-      return { cycles: c, time: baseFn(c), label: info.label, quality: info.quality, recommended: c === 5 };
+      return { cycles: c, time: baseFn(c), label: info.label, recommended: c === 5 };
     });
 
   const sleepNowResults = now
@@ -134,102 +108,187 @@ export default function HomePage() {
   const others = results.filter((r) => !r.recommended);
   const resultType = mode === "wake-at" ? "sleep" : "wake";
 
-  const MODES = [
-    { key: "sleep-now", label: t.calculator.modeNow },
-    { key: "sleep-at", label: t.calculator.modeAt },
-    { key: "wake-at", label: t.calculator.modeWake },
-  ];
+  const resultTitle = resultType === "wake"
+    ? (lang === "ko" ? "추천 기상 시간" : lang === "ja" ? "おすすめ起床時間" : lang === "zh" ? "推荐起床时间" : "Recommended Wake Time")
+    : (lang === "ko" ? "추천 취침 시간" : lang === "ja" ? "おすすめ就寝時間" : lang === "zh" ? "推荐就寝时间" : "Recommended Bedtime");
 
-  const tip = MORNING_TIPS[lang as keyof typeof MORNING_TIPS] ?? MORNING_TIPS.en;
+  const bestLabel = lang === "ko" ? "가장 추천" : lang === "ja" ? "最もおすすめ" : lang === "zh" ? "最推荐" : "Best Choice";
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-24 pb-36 px-5 max-w-lg mx-auto space-y-6">
-        {/* 히어로 */}
-        <section>
-          <span className="inline-block text-[10px] font-semibold tracking-widest uppercase text-primary mb-2 font-[family-name:var(--font-body)]">
-            Cycle Optimizer
-          </span>
-          <h2 className="font-[family-name:var(--font-heading)] font-bold text-3xl text-foreground leading-tight mb-2">
+      <main className="max-w-xl mx-auto px-5 pt-24 pb-36">
+
+        {/* Hero */}
+        <section className="mb-10">
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground mb-2 font-[family-name:var(--font-heading)]">
             {t.calculator.title.replace("\n", " ")}
-          </h2>
-          <p className="text-muted-foreground text-sm leading-relaxed max-w-[85%]">
+          </h1>
+          <p className="text-muted-foreground font-medium leading-relaxed text-sm">
             {t.calculator.subtitle}
           </p>
         </section>
 
-        {/* 탭 */}
-        <div className="glass-card rounded-full p-1.5 flex overflow-hidden">
-          {MODES.map(({ key, label }) => (
-            <button key={key} onClick={() => setMode(key as typeof mode)}
-              className={`flex-1 py-2.5 px-2 rounded-full text-xs font-semibold font-[family-name:var(--font-body)] transition-all ${
-                mode === key
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}>
-              {label}
+        {/* Sleep Now Button */}
+        <section className="mb-6">
+          <div className="relative group">
+            {mode === "sleep-now" && (
+              <div className="absolute -inset-1 primary-gradient rounded-[2rem] blur opacity-25 group-hover:opacity-35 transition duration-700" />
+            )}
+            <button
+              onClick={() => setMode("sleep-now")}
+              className={`relative w-full py-8 rounded-[2rem] flex flex-col items-center justify-center gap-3 shadow-xl transition-all duration-300 active:scale-95 ${
+                mode === "sleep-now"
+                  ? "primary-gradient text-[#4f3e00]"
+                  : "bg-[#131319] text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Moon className={`h-9 w-9 ${mode === "sleep-now" ? "fill-[#4f3e00]" : ""}`} />
+              <span className="text-2xl font-extrabold tracking-tight uppercase font-[family-name:var(--font-heading)]">
+                {t.calculator.modeNow}
+              </span>
+              <p className={`text-sm font-medium ${mode === "sleep-now" ? "opacity-70" : "opacity-40"}`}>
+                {t.calculator.sleepNowDesc}
+              </p>
             </button>
-          ))}
-        </div>
+          </div>
+        </section>
 
-        {/* 시간 선택 (sleep-at / wake-at) */}
-        {(mode === "sleep-at" || mode === "wake-at") && (
-          <TimeSelect
-            hour={mode === "sleep-at" ? sleepHour : wakeHour}
-            onHourChange={mode === "sleep-at" ? setSleepHour : setWakeHour}
-            minute={mode === "sleep-at" ? sleepMinute : wakeMinute}
-            onMinuteChange={mode === "sleep-at" ? setSleepMinute : setWakeMinute}
-          />
+        {/* Wake At / Sleep At Toggle */}
+        <section className="mb-8">
+          <div className="bg-[#131319] p-1.5 rounded-full flex gap-1">
+            <button
+              onClick={() => setMode("wake-at")}
+              className={`flex-1 py-3 px-4 rounded-full font-bold transition-all text-sm ${
+                mode === "wake-at"
+                  ? "bg-[#1f1f28] text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.calculator.modeWake}
+            </button>
+            <button
+              onClick={() => setMode("sleep-at")}
+              className={`flex-1 py-3 px-4 rounded-full font-bold transition-all text-sm ${
+                mode === "sleep-at"
+                  ? "bg-[#1f1f28] text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.calculator.modeAt}
+            </button>
+          </div>
+        </section>
+
+        {/* Time Picker */}
+        {mode === "wake-at" && (
+          <section className="mb-12">
+            <TimePicker hour={wakeHour} onHourChange={setWakeHour} minute={wakeMinute} onMinuteChange={setWakeMinute} />
+          </section>
+        )}
+        {mode === "sleep-at" && (
+          <section className="mb-12">
+            <TimePicker hour={sleepHour} onHourChange={setSleepHour} minute={sleepMinute} onMinuteChange={setSleepMinute} />
+          </section>
         )}
 
-        {/* 안내 문구 */}
-        {mode === "sleep-now" && (
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-[#131316] px-4 py-2 rounded-full border border-border">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <p className="text-sm font-medium" suppressHydrationWarning>
-                {now ? `${formatTime(now).replace("|", " ")} — ${t.calculator.sleepNowDesc}` : ""}
-              </p>
+        {/* Sleep Now current time display */}
+        {mode === "sleep-now" && now && (
+          <section className="mb-10 text-center" suppressHydrationWarning>
+            <div className="inline-flex items-end gap-2">
+              <span className="text-5xl font-extrabold tracking-tighter text-foreground text-glow">
+                {formatTime(now).split("|")[0]}
+              </span>
+              <span className="text-xl font-bold text-muted-foreground pb-1">
+                {formatTime(now).split("|")[1]}
+              </span>
             </div>
-            <p className="text-muted-foreground text-xs italic mt-2">
-              {lang === "ko" ? "잠드는 데 약 15분 소요 기준" :
-               lang === "ja" ? "入眠まで約15分かかる前提" :
-               lang === "zh" ? "以约15分钟入睡时间为准" :
-               "Accounting for ~15 min to fall asleep."}
+            <p className="text-xs text-muted-foreground mt-2">
+              {lang === "ko" ? "잠드는 데 약 15분 소요 기준"
+               : lang === "ja" ? "入眠まで約15分かかる前提"
+               : lang === "zh" ? "以约15分钟入睡时间为准"
+               : "~15 min to fall asleep"}
+            </p>
+          </section>
+        )}
+
+        {/* Results */}
+        <section className="space-y-3">
+          <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground pl-1 mb-4">
+            {resultTitle}
+          </h3>
+
+          {recommended && (() => {
+            const [main, ampm] = formatTime(recommended.time).split("|");
+            return (
+              <div className="bg-[#191920] p-6 rounded-[24px] border-l-4 border-primary/60 relative overflow-hidden">
+                <div className="absolute top-3 right-5 text-5xl opacity-[0.04] select-none pointer-events-none">★</div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2 block">{bestLabel}</span>
+                <h4 className="text-3xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+                  {main} <span className="text-xl text-muted-foreground font-bold">{ampm}</span>
+                </h4>
+                <p className="text-sm text-muted-foreground">{recommended.label}</p>
+              </div>
+            );
+          })()}
+
+          <div className="grid grid-cols-2 gap-3">
+            {others.slice(0, 2).map((r) => {
+              const [main, ampm] = formatTime(r.time).split("|");
+              return (
+                <div key={r.cycles} className="bg-[#131319] p-5 rounded-[24px] hover:bg-[#191920] transition-colors duration-200">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
+                    {r.cycles}{lang === "ko" ? "사이클" : " cycles"}
+                  </span>
+                  <h4 className="text-xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+                    {main}<span className="text-sm text-muted-foreground ml-1">{ampm}</span>
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{r.label}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {others.slice(2).map((r) => {
+            const [main, ampm] = formatTime(r.time).split("|");
+            return (
+              <div key={r.cycles} className="bg-[#131319] p-5 rounded-[24px] hover:bg-[#191920] transition-colors duration-200 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">
+                    {r.cycles}{lang === "ko" ? "사이클" : " cycles"}
+                  </span>
+                  <h4 className="text-xl font-extrabold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+                    {main}<span className="text-sm text-muted-foreground ml-1">{ampm}</span>
+                  </h4>
+                  <p className="text-xs text-muted-foreground">{r.label}</p>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-[#1f1f28] flex items-center justify-center shrink-0">
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </div>
+            );
+          })}
+        </section>
+
+        {/* Sleep Science */}
+        <section className="mt-16 rounded-[2rem] overflow-hidden relative h-44">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1f1f28] to-[#0e0e12]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 p-6">
+            <h5 className="text-lg font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              {lang === "ko" ? "수면의 과학" : lang === "ja" ? "睡眠の科学" : lang === "zh" ? "睡眠科学" : "Sleep Science"}
+            </h5>
+            <p className="text-xs text-muted-foreground max-w-xs leading-relaxed">
+              {lang === "ko" ? "한 사이클은 약 90분입니다. 사이클 중간에 깨면 더 피곤함을 느낄 수 있습니다."
+               : lang === "ja" ? "1サイクルは約90分。サイクルの途中で目覚めると、より疲れを感じることがあります。"
+               : lang === "zh" ? "一个周期约90分钟。在周期中途醒来可能会感到更加疲惫。"
+               : "One cycle is ~90 min. Waking mid-cycle can leave you feeling groggy."}
             </p>
           </div>
-        )}
+        </section>
 
-        {/* 결과 */}
-        <div className="space-y-3">
-          {recommended && (
-            <RecommendedCard time={recommended.time} label={recommended.label} type={resultType} />
-          )}
-          <div className="space-y-3">
-            {others.map((r) => (
-              <StandardCard key={r.cycles} time={r.time} label={r.label} />
-            ))}
-          </div>
-        </div>
-
-        {/* 팁 */}
-        <div className="p-5 rounded-2xl border border-border/30 bg-[#131316]/40">
-          <div className="flex gap-4">
-            <div className="w-10 h-10 rounded-full bg-[var(--tertiary)]/10 flex items-center justify-center shrink-0">
-              <Lightbulb className="h-5 w-5 text-[var(--tertiary)]" />
-            </div>
-            <div>
-              <h4 className="font-[family-name:var(--font-heading)] font-bold text-sm mb-1">
-                {lang === "ko" ? "오늘의 팁" : lang === "ja" ? "今日のヒント" : lang === "zh" ? "今日贴士" : "Morning Tip"}
-              </h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{tip}</p>
-            </div>
-          </div>
-        </div>
       </main>
-
       <BottomNav />
     </div>
   );
