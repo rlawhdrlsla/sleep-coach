@@ -2,6 +2,7 @@
 
 import { Moon, Clock, Sun, BookOpen } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function BottomNav() {
@@ -20,7 +21,7 @@ export default function BottomNav() {
       {items.map(({ href, icon: Icon, label }) => {
         const active = pathname === href;
         return (
-          <a
+          <Link
             key={href}
             href={href}
             className={`flex flex-col items-center justify-center gap-1 px-4 py-1.5 rounded-2xl transition-all duration-200 active:scale-90 ${
@@ -33,7 +34,7 @@ export default function BottomNav() {
             <span className="text-[10px] font-semibold tracking-wide uppercase font-[family-name:var(--font-body)]">
               {label}
             </span>
-          </a>
+          </Link>
         );
       })}
     </nav>

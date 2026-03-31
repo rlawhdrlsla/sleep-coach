@@ -34,13 +34,13 @@ function TimeSelect({ hour, onHourChange, minute, onMinuteChange }: {
       <select value={hour} onChange={(e) => onHourChange(+e.target.value)}
         className="glass-card rounded-xl px-4 py-3 text-3xl font-[family-name:var(--font-heading)] font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none text-center cursor-pointer"
         style={{ minWidth: 90 }}>
-        {hours.map((h) => <option key={h} value={h} className="bg-[#1f1f27]">{String(h).padStart(2, "0")}</option>)}
+        {hours.map((h) => <option key={h} value={h} className="bg-[#131316]">{String(h).padStart(2, "0")}</option>)}
       </select>
       <span className="text-3xl font-bold text-muted-foreground">:</span>
       <select value={minute} onChange={(e) => onMinuteChange(+e.target.value)}
         className="glass-card rounded-xl px-4 py-3 text-3xl font-[family-name:var(--font-heading)] font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none text-center cursor-pointer"
         style={{ minWidth: 90 }}>
-        {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#1f1f27]">{String(m).padStart(2, "0")}</option>)}
+        {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#131316]">{String(m).padStart(2, "0")}</option>)}
       </select>
     </div>
   );
@@ -49,7 +49,7 @@ function TimeSelect({ hour, onHourChange, minute, onMinuteChange }: {
 function RecommendedCard({ time, label, type }: { time: Date; label: string; type: "wake" | "sleep" }) {
   const [main, ampm] = formatTime(time).split("|");
   return (
-    <div className="glass-card rounded-2xl p-5 relative overflow-hidden active-glow border-primary/20 bg-gradient-to-br from-[#1f1f27] to-[#13131b] mb-4">
+    <div className="glass-card rounded-2xl p-5 relative overflow-hidden active-glow border-primary/20 bg-gradient-to-br from-[#131316] to-[#0c0c0e] mb-4">
       <div className="absolute top-0 right-0 bg-[var(--tertiary)] text-[#221b00] text-[10px] font-bold px-3 py-1 rounded-bl-2xl uppercase tracking-tight font-[family-name:var(--font-heading)]">
         {type === "wake" ? "권장" : "권장"}
       </div>
@@ -72,7 +72,7 @@ function RecommendedCard({ time, label, type }: { time: Date; label: string; typ
 function StandardCard({ time, label }: { time: Date; label: string }) {
   const [main, ampm] = formatTime(time).split("|");
   return (
-    <div className="glass-card rounded-2xl p-5 hover:bg-[#34343d]/40 transition-colors cursor-default">
+    <div className="glass-card rounded-2xl p-5 hover:bg-[#1a1a1f]/60 transition-colors cursor-default">
       <div className="flex justify-between items-center">
         <div>
           <div className="flex items-baseline gap-1">
@@ -187,7 +187,7 @@ export default function HomePage() {
         {/* 안내 문구 */}
         {mode === "sleep-now" && (
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-[#1f1f27] px-4 py-2 rounded-full border border-border">
+            <div className="inline-flex items-center gap-2 bg-[#131316] px-4 py-2 rounded-full border border-border">
               <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               <p className="text-sm font-medium" suppressHydrationWarning>
                 {now ? `${formatTime(now).replace("|", " ")} — ${t.calculator.sleepNowDesc}` : ""}
@@ -215,7 +215,7 @@ export default function HomePage() {
         </div>
 
         {/* 팁 */}
-        <div className="p-5 rounded-2xl border border-border/30 bg-[#1b1b23]/30">
+        <div className="p-5 rounded-2xl border border-border/30 bg-[#131316]/40">
           <div className="flex gap-4">
             <div className="w-10 h-10 rounded-full bg-[var(--tertiary)]/10 flex items-center justify-center shrink-0">
               <Lightbulb className="h-5 w-5 text-[var(--tertiary)]" />

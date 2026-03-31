@@ -130,12 +130,12 @@ export default function LogPage() {
                   <div className="flex gap-1.5">
                     <select value={item.hour} onChange={(e) => item.setHour(+e.target.value)}
                       className="flex-1 glass-card rounded-xl px-2 py-2.5 text-sm font-bold text-center focus:outline-none focus:ring-1 focus:ring-primary/50 appearance-none cursor-pointer bg-transparent">
-                      {hours.map((h) => <option key={h} value={h} className="bg-[#1f1f27]">{String(h).padStart(2, "0")}</option>)}
+                      {hours.map((h) => <option key={h} value={h} className="bg-[#131316]">{String(h).padStart(2, "0")}</option>)}
                     </select>
                     <span className="text-muted-foreground self-center font-bold">:</span>
                     <select value={item.min} onChange={(e) => item.setMin(+e.target.value)}
                       className="flex-1 glass-card rounded-xl px-2 py-2.5 text-sm font-bold text-center focus:outline-none focus:ring-1 focus:ring-primary/50 appearance-none cursor-pointer bg-transparent">
-                      {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#1f1f27]">{String(m).padStart(2, "0")}</option>)}
+                      {minuteOptions.map((m) => <option key={m} value={m} className="bg-[#131316]">{String(m).padStart(2, "0")}</option>)}
                     </select>
                   </div>
                 </div>
