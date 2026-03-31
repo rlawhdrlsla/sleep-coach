@@ -272,9 +272,15 @@ export default function HomePage() {
         </section>
 
         {/* Sleep Science */}
-        <section className="mt-16 rounded-[2rem] overflow-hidden relative h-44">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1f1f28] to-[#0e0e12]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <section className="mt-16 rounded-[2rem] overflow-hidden relative h-44 group">
+          {/* Moon image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/800px-FullMoon2010.jpg"
+            alt="moon"
+            className="absolute inset-0 w-full h-full object-cover grayscale opacity-25 group-hover:scale-105 transition-transform duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6">
             <h5 className="text-lg font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
               {lang === "ko" ? "수면의 과학" : lang === "ja" ? "睡眠の科学" : lang === "zh" ? "睡眠科学" : "Sleep Science"}
