@@ -61,6 +61,8 @@ export default function LogPage() {
 
   async function saveLog() {
     setSaving(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setSaving(false); toast.error(t.log.saveError); return; }
     const today = new Date();
     const sleepDate = new Date(today);
     sleepDate.setHours(sleepHour, sleepMin, 0, 0);
@@ -69,6 +71,7 @@ export default function LogPage() {
     if (wakeDate <= sleepDate) wakeDate.setDate(wakeDate.getDate() + 1);
     const diffMin = (wakeDate.getTime() - sleepDate.getTime()) / 60000;
     const { error } = await supabase.from("sleep_logs").insert({
+      user_id: user.id,
       sleep_at: sleepDate.toISOString(),
       wake_at: wakeDate.toISOString(),
       cycles: Math.max(1, Math.round(diffMin / 90)),
@@ -76,7 +79,7 @@ export default function LogPage() {
       memo: memo || null,
     });
     setSaving(false);
-    if (error) { toast.error(t.log.saveError); return; }
+    if (error) { toast.error(error.message); return; }
     toast.success(t.log.saved);
     setShowForm(false);
     setMemo("");
