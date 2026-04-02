@@ -1,6 +1,6 @@
 "use client";
 
-import { Moon, Clock, BarChart2, BookOpen } from "lucide-react";
+import { Moon, BookOpen } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/LanguageContext";
@@ -11,8 +11,8 @@ export default function BottomNav() {
 
   const items = [
     { href: "/", icon: Moon, label: t.nav.calculator },
-    { href: "/log", icon: Clock, label: t.nav.log },
-    { href: "/stats", icon: BarChart2, label: t.nav.stats },
+    // { href: "/log", icon: Clock, label: t.nav.log },
+    // { href: "/stats", icon: BarChart2, label: t.nav.stats },
     { href: "/tips", icon: BookOpen, label: t.nav.tips },
   ];
 
