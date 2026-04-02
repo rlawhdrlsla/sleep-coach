@@ -34,6 +34,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${notoSansKR.variable} ${manrope.variable} ${plusJakarta.variable}`}>
+      <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2550387699417589" crossOrigin="anonymous"></script>
+      </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <LanguageProvider>
           {children}
