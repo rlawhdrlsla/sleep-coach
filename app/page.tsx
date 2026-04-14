@@ -5,6 +5,7 @@ import { Moon } from "lucide-react";
 import { useLang } from "@/lib/i18n/LanguageContext";
 import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
+import AdBanner from "@/components/AdBanner";
 
 const CYCLE_MINUTES = 90;
 const FALL_ASLEEP_MINUTES = 15;
@@ -248,6 +249,9 @@ export default function HomePage() {
             );
           })}
         </section>
+
+        {/* Ad */}
+        <AdBanner className="my-8" />
 
         {/* Sleep Science */}
         <section className="mt-16 rounded-[2rem] overflow-hidden relative h-44 group">
